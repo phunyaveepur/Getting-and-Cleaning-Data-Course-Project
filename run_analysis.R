@@ -38,7 +38,7 @@ sel_features <- feature[grepl("[Mm]ean|[Ss]td",feature$features),1] +1
 tidy_data <- full_data[, sel_features]
 
 #Revise column names 
-names(tidy_data) <- names(cut_data) %>% 
+names(tidy_data) <- names(tidy_data) %>% 
         lapply(function(x) {x <- gsub("\\.+", "_", x)}) %>% 
         lapply(function(x) {x <- gsub("_$", "", x)}) %>% 
         lapply(function(x) {x <- gsub("^t", "Time", x)}) %>% 
