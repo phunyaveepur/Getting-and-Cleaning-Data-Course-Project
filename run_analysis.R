@@ -36,7 +36,7 @@ train_data <- cbind(train_subject, activity_train,train_x[, sel_features])
 tidy_data <- rbind(test_data, train_data)
 tidy_data <- select(tidy_data, !activityID)
 
-#Check if full_data is complete
+#Check if tidy_data is complete
 dim(test_data)
 dim(train_data)
 dim(tidy_data)
