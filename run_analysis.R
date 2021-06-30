@@ -1,5 +1,11 @@
 library(dplyr)
 
+#Download and unzip file
+filename <- "UCI HAR Dataset.zip"
+fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+download.file(fileURL, filename, method="curl")
+unzip(filename) 
+
 #Define source file locations
 src_feature <-  "UCI HAR Dataset/features.txt"
 src_activity <- "UCI HAR Dataset/activity_labels.txt"
@@ -36,7 +42,7 @@ train_data <- cbind(train_subject, activity_train,train_x[, sel_features])
 tidy_data <- rbind(test_data, train_data)
 tidy_data <- select(tidy_data, !activityID)
 
-#Check if tidy_data is complete
+#Check if full_data is complete
 dim(test_data)
 dim(train_data)
 dim(tidy_data)
