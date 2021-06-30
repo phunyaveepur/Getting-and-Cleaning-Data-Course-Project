@@ -13,9 +13,11 @@ src_train_Y <-  "UCI HAR Dataset/train/Y_train.txt"
 #Read files into Data Frame with column names defined
 feature <- read.table(src_feature, col.names = c("id","features"))
 activity <- read.table(src_activity, col.names = c("activityID","activity"))
+
 test_subject <- read.table(src_test_subject, col.names = c("subject"))
 test_x <- read.table(src_test_X, col.names = feature$features)
 test_y <- read.table(src_test_Y, col.names = c("activityID"))
+
 train_subject <- read.table(src_train_subject, col.names = c("subject"))
 train_x <- read.table(src_train_X, col.names = feature$features)
 train_y <- read.table(src_train_Y, col.names = c("activityID"))
@@ -24,8 +26,8 @@ train_y <- read.table(src_train_Y, col.names = c("activityID"))
 sel_features <- feature[grepl("[Mm]ean|[Ss]td",feature$features),1] 
 
 #Merge activity description column
-activity_test <- merge(test_y, activity, by.x = "activityID", by.y = "activityID")
-activity_train <- merge(train_y, activity, by.x = "activityID", by.y = "activityID")
+activity_test <- left_join(test_y, activity, by.x = "activityID", by.y = "activityID")
+activity_train <- left_join(train_y, activity, by.x = "activityID", by.y = "activityID")
 
 #Merge all for each set and then combine them altogether
 #Select only columns which present MEAN or STD from full_data using sel_features
@@ -59,4 +61,4 @@ names(tidy_data) <- names(tidy_data) %>%
 Average_All <- tidy_data %>% 
         group_by(subject, activity) %>% 
         summarise_all(funs(mean))
-write.table(Average_All, "Average_All.txt", row.name=FALSE)
+write.table(Average_All, "Average_All.txt", row.name=FALSE) 
